@@ -18,26 +18,28 @@ import javafx.stage.Stage;
 public class App extends Application {
 
 	private BorderPane pane;
+	private HBox hTopo, hMedia;
+	private VBox vBoxMenu;
 	private static Stage stage;
 	private Button btInicio, btBusca, btBiblioteca, btNovaPlaylist, btMusicasCurtidas, btConta, btSair;
+	private Label lbSpotify;
 	private TextField tfBusca;
 
 	public void initComponents() {
 
 		pane = new BorderPane();
-		pane.setPrefSize(800, 600);
 
-		HBox hTopo = initHTopo();
+		pane.setPrefSize(800, 500);
+
+		hTopo = initHTopo();
 		pane.setTop(hTopo);
-		hTopo.setAlignment(Pos.TOP_RIGHT);
-
-		VBox vBoxMenu = initVBoxMenu();
+		
+		vBoxMenu = initVBoxMenu();
 		pane.setLeft(vBoxMenu);
-		vBoxMenu.setAlignment(Pos.BASELINE_LEFT);
-
-		HBox hMedia = initHMedia();
+		
+		hMedia = initHMedia();
 		pane.setBottom(hMedia);
-		hMedia.setAlignment(Pos.BOTTOM_CENTER);
+		
 	}
 
 	public HBox initHTopo() {
@@ -47,14 +49,10 @@ public class App extends Application {
 		tfBusca = new TextField();
 		tfBusca.setPromptText("Busque artistas, músicas ou podcasts...");
 		tfBusca.setVisible(false);
-		tfBusca.setAlignment(Pos.BASELINE_LEFT);
-		tfBusca.setPrefWidth(300);
 		
 		btConta = new Button("Conta");
-		btConta.setAlignment(Pos.TOP_RIGHT);
 		
 		btSair = new Button("Sair");
-		btSair.setAlignment(Pos.TOP_RIGHT);
 		
 		hTopo.getChildren().addAll(tfBusca, btConta, btSair);
 
@@ -65,21 +63,14 @@ public class App extends Application {
 
 		VBox vBoxMenu = new VBox(25);
 
-		Label lbSpotify = new Label("Spotify");
+		lbSpotify = new Label("Spotify");
 		vBoxMenu.getChildren().add(lbSpotify);
-		lbSpotify.setAlignment(Pos.BASELINE_CENTER);
 
 		btInicio = new Button("Início");
 		btBusca = new Button("Buscar");
 		btBiblioteca = new Button("Sua Biblioteca");
 		btNovaPlaylist = new Button("Nova playlist");
 		btMusicasCurtidas = new Button("Músicas curtidas");
-
-		btInicio.setPrefWidth(140);
-		btBusca.setPrefWidth(140);
-		btBiblioteca.setPrefWidth(140);
-		btNovaPlaylist.setPrefWidth(140);
-		btMusicasCurtidas.setPrefWidth(140);
 
 		vBoxMenu.getChildren().addAll(btInicio, btBusca, btBiblioteca, btNovaPlaylist, btMusicasCurtidas);
 
@@ -106,7 +97,26 @@ public class App extends Application {
 	}
 
 	public void initLayout() {
+		
+		hTopo.setAlignment(Pos.TOP_RIGHT);
+		vBoxMenu.setAlignment(Pos.BASELINE_LEFT);
+		hMedia.setAlignment(Pos.BOTTOM_CENTER);
+		
+		tfBusca.setAlignment(Pos.BASELINE_LEFT);
+		tfBusca.setPrefWidth(300);
 
+		btConta.setAlignment(Pos.TOP_RIGHT);
+
+		btSair.setAlignment(Pos.TOP_RIGHT);
+		
+		lbSpotify.setAlignment(Pos.TOP_CENTER);
+		
+		btInicio.setPrefWidth(140);
+		btBusca.setPrefWidth(140);
+		btBiblioteca.setPrefWidth(140);
+		btNovaPlaylist.setPrefWidth(140);
+		btMusicasCurtidas.setPrefWidth(140);
+		
 	}
 
 	public void initListeners() {
