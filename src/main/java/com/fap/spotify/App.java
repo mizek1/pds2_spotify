@@ -1,12 +1,19 @@
 
 package com.fap.spotify;
 
+import java.util.Optional;
+
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -120,7 +127,15 @@ public class App extends Application {
 	}
 
 	public void initListeners() {
-
+		
+		btSair.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				if(confirmarSair() == true) fechar();	
+			}
+		});
+		
 	}
 
 	public void initStage(Stage stage) {
@@ -142,6 +157,20 @@ public class App extends Application {
 
 	public static void main(String[] args) {
 		launch();
+	}
+	
+	public boolean confirmarSair() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Sair");
+		alert.setHeaderText("Sair da aplicação");
+		alert.setContentText("Você deseja sair?");
+		Optional<ButtonType> result = alert.showAndWait();
+		if(result.get() == ButtonType.OK) return true;
+		else return false;
+	}
+	
+	public void fechar() {
+		System.exit(0);
 	}
 
 }
