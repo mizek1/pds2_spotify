@@ -147,6 +147,14 @@ public class App extends Application {
 			}
 		});
 
+		btInicio.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				funcaoIndisponivel();
+			}
+		});
+		
 	}
 
 	public void initStage(Stage stage) {
@@ -180,6 +188,14 @@ public class App extends Application {
 			return true;
 		else
 			return false;
+	}
+	
+	public void funcaoIndisponivel() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Indisponível");
+		alert.setHeaderText("Função indisponível :(");
+		alert.setContentText("Esperamos poder disponibilizá-la em breve!");
+		alert.showAndWait();
 	}
 
 	public void fechar() {
