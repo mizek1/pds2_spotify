@@ -40,13 +40,13 @@ public class App extends Application {
 
 		hTopo = initHTopo();
 		pane.setTop(hTopo);
-		
+
 		vBoxMenu = initVBoxMenu();
 		pane.setLeft(vBoxMenu);
-		
+
 		hMedia = initHMedia();
 		pane.setBottom(hMedia);
-		
+
 	}
 
 	public HBox initHTopo() {
@@ -56,11 +56,11 @@ public class App extends Application {
 		tfBusca = new TextField();
 		tfBusca.setPromptText("Busque artistas, músicas ou podcasts...");
 		tfBusca.setVisible(false);
-		
+
 		btConta = new Button("Conta");
-		
+
 		btSair = new Button("Sair");
-		
+
 		hTopo.getChildren().addAll(tfBusca, btConta, btSair);
 
 		return hTopo;
@@ -104,38 +104,49 @@ public class App extends Application {
 	}
 
 	public void initLayout() {
-		
+
 		hTopo.setAlignment(Pos.TOP_RIGHT);
 		vBoxMenu.setAlignment(Pos.BASELINE_LEFT);
 		hMedia.setAlignment(Pos.BOTTOM_CENTER);
-		
+
 		tfBusca.setAlignment(Pos.BASELINE_LEFT);
 		tfBusca.setPrefWidth(300);
 
 		btConta.setAlignment(Pos.TOP_RIGHT);
 
 		btSair.setAlignment(Pos.TOP_RIGHT);
-		
+
 		lbSpotify.setAlignment(Pos.TOP_CENTER);
-		
+
 		btInicio.setPrefWidth(140);
 		btBusca.setPrefWidth(140);
 		btBiblioteca.setPrefWidth(140);
 		btNovaPlaylist.setPrefWidth(140);
 		btMusicasCurtidas.setPrefWidth(140);
-		
+
 	}
 
 	public void initListeners() {
-		
-		btSair.setOnAction(new EventHandler<ActionEvent>() {
-			
+
+		btBusca.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if(confirmarSair() == true) fechar();	
+				if (!tfBusca.isVisible()) {
+					tfBusca.setVisible(true);
+				} else {
+					tfBusca.setVisible(false);
+				}
 			}
 		});
-		
+
+		btSair.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if (confirmarSair() == true)
+					fechar();
+			}
+		});
+
 	}
 
 	public void initStage(Stage stage) {
@@ -158,17 +169,19 @@ public class App extends Application {
 	public static void main(String[] args) {
 		launch();
 	}
-	
+
 	public boolean confirmarSair() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Sair");
 		alert.setHeaderText("Sair da aplicação");
 		alert.setContentText("Você deseja sair?");
 		Optional<ButtonType> result = alert.showAndWait();
-		if(result.get() == ButtonType.OK) return true;
-		else return false;
+		if (result.get() == ButtonType.OK)
+			return true;
+		else
+			return false;
 	}
-	
+
 	public void fechar() {
 		System.exit(0);
 	}
