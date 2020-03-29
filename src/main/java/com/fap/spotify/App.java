@@ -1,6 +1,8 @@
 
 package com.fap.spotify;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javafx.application.Application;
@@ -16,7 +18,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -27,11 +28,12 @@ public class App extends Application {
 
 	private BorderPane pane;
 	private HBox hTopo, hMedia;
-	private VBox vBoxMenu;
+	private VBox vBoxMenu, painelPrincipal;
 	private static Stage stage;
-	private Button btInicio, btBusca, btBiblioteca, btNovaPlaylist, btMusicasCurtidas, btConta, btSair;
-	private Label lbSpotify;
-	private TextField tfBusca;
+	private Button btInicio, btBusca, btBiblioteca, btNovaPlaylist, btMusicasCurtidas, btConta, btSair, btAddMusica;
+	private Label lbSpotify, lbTitle;
+	private TextField tfBusca, tfTituloMusica, tfArtista;
+	private List<Musica> musicasCurtidas = new ArrayList<Musica>();
 
 	public void initComponents() {
 
@@ -47,6 +49,9 @@ public class App extends Application {
 
 		hMedia = initHMedia();
 		pane.setBottom(hMedia);
+		
+		painelPrincipal = initPrincipal();
+		pane.setCenter(painelPrincipal);
 
 	}
 
@@ -104,8 +109,19 @@ public class App extends Application {
 		return hMedia;
 	}
 	
-	public Pane initPrincipal() {
+	public VBox initPrincipal() {
 		
+		painelPrincipal = new VBox(15);
+		
+		lbTitle = new Label("Músicas curtidas");
+		
+		tfArtista = new TextField("Nome do artista");
+		tfTituloMusica = new TextField("Titulo da música");
+		btAddMusica = new Button("Adicionar");
+		
+		painelPrincipal.getChildren().addAll(lbTitle, tfTituloMusica, tfArtista, btAddMusica);
+		
+		return painelPrincipal;
 	}
 
 	public void initLayout() {
@@ -113,6 +129,7 @@ public class App extends Application {
 		hTopo.setAlignment(Pos.TOP_RIGHT);
 		vBoxMenu.setAlignment(Pos.BASELINE_LEFT);
 		hMedia.setAlignment(Pos.BOTTOM_CENTER);
+		painelPrincipal.setAlignment(Pos.CENTER);
 
 		tfBusca.setAlignment(Pos.BASELINE_LEFT);
 		tfBusca.setPrefWidth(300);
@@ -129,6 +146,10 @@ public class App extends Application {
 		btNovaPlaylist.setPrefWidth(140);
 		btMusicasCurtidas.setPrefWidth(140);
 
+		lbTitle.setAlignment(Pos.TOP_CENTER);
+		tfTituloMusica.setPrefWidth(140);
+		tfArtista.setPrefWidth(140);
+		btAddMusica.setPrefWidth(140);
 	}
 
 	public void initListeners() {
@@ -200,6 +221,10 @@ public class App extends Application {
 		alert.setHeaderText("Função indisponível :(");
 		alert.setContentText("Esperamos poder disponibilizá-la em breve!");
 		alert.showAndWait();
+	}
+	
+	public void adicionarMusica(Musica musica) {
+		musicasCurtidas.add(musica);
 	}
 
 	public void fechar() {
