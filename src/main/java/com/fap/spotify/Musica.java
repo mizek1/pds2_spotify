@@ -26,4 +26,9 @@ public class Musica {
 		this.artista = artista;
 	}
 	
+	@Override
+	public String toString() {
+		return getTitulo() + " - " + getArtista();
+	}
+	
 }
