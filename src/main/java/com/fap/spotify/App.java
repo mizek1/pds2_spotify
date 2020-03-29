@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
@@ -30,10 +31,11 @@ public class App extends Application {
 	private HBox hTopo, hMedia;
 	private VBox vBoxMenu, painelPrincipal;
 	private static Stage stage;
-	private Button btInicio, btBusca, btBiblioteca, btNovaPlaylist, btMusicasCurtidas, btConta, btSair, btAddMusica;
+	private Button btInicio, btBusca, btBiblioteca, btNovaPlaylist, btMusicasCurtidas, btConta, btSair, btAddMusica, btAtualizar;
 	private Label lbSpotify, lbTitle;
 	private TextField tfBusca, tfTituloMusica, tfArtista;
 	private List<Musica> musicasCurtidas = new ArrayList<Musica>();
+	private ListView<Musica> listaMusicasCurtidas;
 
 	public void initComponents() {
 
@@ -117,9 +119,13 @@ public class App extends Application {
 		
 		tfArtista = new TextField("Nome do artista");
 		tfTituloMusica = new TextField("Titulo da música");
-		btAddMusica = new Button("Adicionar");
 		
-		painelPrincipal.getChildren().addAll(lbTitle, tfTituloMusica, tfArtista, btAddMusica);
+		btAddMusica = new Button("Adicionar");
+		btAtualizar = new Button("Atualizar lista");
+		
+		listaMusicasCurtidas = new ListView<Musica>();
+		
+		painelPrincipal.getChildren().addAll(lbTitle, tfTituloMusica, tfArtista, btAddMusica, btAtualizar, listaMusicasCurtidas);
 		
 		return painelPrincipal;
 	}
@@ -150,6 +156,7 @@ public class App extends Application {
 		tfTituloMusica.setPrefWidth(140);
 		tfArtista.setPrefWidth(140);
 		btAddMusica.setPrefWidth(140);
+		btAtualizar.setPrefWidth(190);
 	}
 
 	public void initListeners() {
@@ -177,6 +184,27 @@ public class App extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				funcaoIndisponivel();
+			}
+		});
+		
+		btAddMusica.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				if(!tfTituloMusica.getText().isEmpty() && !tfArtista.getText().isEmpty()) {
+					Musica musica = new Musica(tfTituloMusica.getText(), tfArtista.getText());
+					adicionarMusica(musica);
+				} else {
+					camposVazios();
+				} 
+			}
+		});
+		
+		btAtualizar.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				atualizarListaMusicas();
 			}
 		});
 		
@@ -223,8 +251,21 @@ public class App extends Application {
 		alert.showAndWait();
 	}
 	
+	public void camposVazios() {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Campos vazios");
+		alert.setHeaderText("Preencha os campos!");
+		alert.setContentText("Há 1 ou mais campos vazios.");
+		alert.showAndWait();
+	}
+	
 	public void adicionarMusica(Musica musica) {
 		musicasCurtidas.add(musica);
+	}
+	
+	public void atualizarListaMusicas() {
+		listaMusicasCurtidas.getItems().clear();
+		listaMusicasCurtidas.getItems().addAll(musicasCurtidas);
 	}
 
 	public void fechar() {
