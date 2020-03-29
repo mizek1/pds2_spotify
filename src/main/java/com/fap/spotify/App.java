@@ -31,7 +31,8 @@ public class App extends Application {
 	private HBox hTopo, hMedia;
 	private VBox vBoxMenu, painelPrincipal;
 	private static Stage stage;
-	private Button btInicio, btBusca, btBiblioteca, btNovaPlaylist, btMusicasCurtidas, btConta, btSair, btAddMusica, btAtualizar;
+	private Button btInicio, btBusca, btBiblioteca, btNovaPlaylist, btMusicasCurtidas, btConta, btSair, 
+	btAddMusica, btAtualizar, btPlay, btAleatorio, btProxima, btAnterior, btRepete;
 	private Label lbSpotify, lbTitle;
 	private TextField tfBusca, tfTituloMusica, tfArtista;
 	private List<Musica> musicasCurtidas = new ArrayList<Musica>();
@@ -100,11 +101,11 @@ public class App extends Application {
 
 		hMedia.getChildren().addAll(nomeMusica, nomeDisco);
 
-		Button btAleatorio = new Button("Aleatorio");
-		Button btAnterior = new Button("<<");
-		Button btPlay = new Button("i>");
-		Button btProxima = new Button(">>");
-		Button btRepete = new Button("Repete");
+		btAleatorio = new Button("Aleatorio");
+		btAnterior = new Button("<<");
+		btPlay = new Button("►");
+		btProxima = new Button(">>");
+		btRepete = new Button("Repete");
 
 		hMedia.getChildren().addAll(btAleatorio, btAnterior, btPlay, btProxima, btRepete);
 
@@ -161,6 +162,20 @@ public class App extends Application {
 
 	public void initListeners() {
 
+		btPlay.setOnAction(new EventHandler<ActionEvent>() {
+			int flag = 0;
+			@Override
+			public void handle(ActionEvent event) {
+				if (flag == 0) {
+					btPlay.setText("||");
+					flag = 1;
+				} else {
+					btPlay.setText("►");
+					flag = 0;
+				}
+			}
+		});
+		
 		btBusca.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
